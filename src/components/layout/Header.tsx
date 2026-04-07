@@ -1,12 +1,31 @@
+import { useEffect, useState } from "react";
+
 import { Button } from "../ui/Button";
+import { cn } from "../../utils/utils";
 
 type HeaderProps = {
   onOpenCollection: () => void;
 };
 
 function Header({ onOpenCollection }: HeaderProps) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className='sticky top-0 z-40 w-full border-b border-[#E5E5E5] bg-white px-6 py-4'>
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full border border-[#E5E5E5] px-6 py-4 transition-all duration-300",
+        isScrolled
+          ? "border-[#E5E5E5] bg-white/80 shadow-sm backdrop-blur-md"
+          : "bg-[#FAFAFA]/80 backdrop-blur-sm"
+      )}
+    >
       <div className='flex items-center justify-between'>
         <span className='text-xl font-bold text-[#1A1A1A]'>ArtSpark</span>
 
