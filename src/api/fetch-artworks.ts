@@ -1,5 +1,9 @@
 import { getPageForToday } from "../lib/artwork-of-the-day";
-import type { ArtworkWithImage, ArtworkSearchApiResponse, ArtworkApiResponse } from "../types/artwork";
+import type {
+  ArtworkWithImage,
+  ArtworkSearchApiResponse,
+  ArtworkApiResponse,
+} from "../types/artwork";
 
 const BASE_URL = "https://api.artic.edu/api/v1";
 
@@ -72,7 +76,10 @@ async function fetchArtworkWithRetry(
   throw new Error("Could not find a valid artwork after multiple attempts");
 }
 
-async function fetchRandomArtwork(totalPages: number, excludeIds?: number[]): Promise<ArtworkWithImage> {
+async function fetchRandomArtwork(
+  totalPages: number,
+  excludeIds?: number[]
+): Promise<ArtworkWithImage> {
   const getPage = () => Math.floor(Math.random() * totalPages) + 1;
 
   return fetchArtworkWithRetry(getPage, excludeIds);
@@ -104,4 +111,10 @@ async function fetchArtworkById(id: number): Promise<ArtworkWithImage> {
   return data.data as ArtworkWithImage;
 }
 
-export { fetchTotalArtworks, fetchArtworkByPage, fetchRandomArtwork, fetchArtworkOfTheDay, fetchArtworkById };
+export {
+  fetchTotalArtworks,
+  fetchArtworkByPage,
+  fetchRandomArtwork,
+  fetchArtworkOfTheDay,
+  fetchArtworkById,
+};
