@@ -3,7 +3,7 @@ import type { ArtworkWithImage } from "../types/artwork";
 import {
   fetchArtworkOfTheDay,
   fetchRandomArtwork,
-  fetchTotalArtworks,
+  fetchSafeTotalPages,
 } from "../api/fetch-artworks";
 
 function useArtwork() {
@@ -34,8 +34,8 @@ function useArtwork() {
     setError(null);
 
     try {
-      const total = await fetchTotalArtworks();
-      const result = await fetchRandomArtwork(total, seenIds.current);
+      const totalPages = await fetchSafeTotalPages();
+      const result = await fetchRandomArtwork(totalPages, seenIds.current);
 
       seenIds.current = [...seenIds.current, result.id];
       setArtwork(result);

@@ -26,6 +26,7 @@ const FIELDS = [
 ].join(",");
 
 const MAX_RETRIES = 10;
+const MAX_PAGES = 1000;
 
 async function fetchTotalArtworks(): Promise<number> {
   const url = `${BASE_URL}/artworks/search?query[term][is_public_domain]=true&limit=0`;
@@ -39,6 +40,12 @@ async function fetchTotalArtworks(): Promise<number> {
   const data: ArtworkSearchApiResponse = await response.json();
 
   return data.pagination.total;
+}
+
+async function fetchSafeTotalPages(): Promise<number> {
+  const total = await fetchTotalArtworks();
+
+  return Math.min(total, MAX_PAGES);
 }
 
 async function fetchArtworkByPage(page: number): Promise<ArtworkWithImage | null> {
@@ -86,9 +93,9 @@ async function fetchRandomArtwork(
 }
 
 async function fetchArtworkOfTheDay(): Promise<ArtworkWithImage> {
-  const total = await fetchTotalArtworks();
-  const todayPage = getPageForToday(total);
-  const getPage = (attempt: number) => ((todayPage - 1 + attempt) % total) + 1;
+  const totalPages = await fetchSafeTotalPages();
+  const todayPage = getPageForToday(totalPages);
+  const getPage = (attempt: number) => ((todayPage - 1 + attempt) % totalPages) + 1;
 
   return fetchArtworkWithRetry(getPage);
 }
@@ -113,6 +120,7 @@ async function fetchArtworkById(id: number): Promise<ArtworkWithImage> {
 
 export {
   fetchTotalArtworks,
+  fetchSafeTotalPages,
   fetchArtworkByPage,
   fetchRandomArtwork,
   fetchArtworkOfTheDay,
