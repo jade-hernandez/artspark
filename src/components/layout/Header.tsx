@@ -21,7 +21,7 @@ function Header({ onOpenCollection }: HeaderProps) {
   return (
     <header
       className={cn(
-        "border-border sticky top-0 z-50 w-full border px-6 py-4 transition-all duration-300",
+        "border-border sticky top-0 z-20 w-full border px-6 py-4 transition-all duration-300",
         isScrolled
           ? "border-border bg-white/80 shadow-sm backdrop-blur-md"
           : "bg-background/80 backdrop-blur-sm"

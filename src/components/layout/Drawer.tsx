@@ -4,6 +4,7 @@ import { Portal } from "../ui/Portal";
 import { Button } from "../ui/Button";
 import { Loader } from "../ui/Loader";
 import { CloseIcon } from "../icons/CloseIcon";
+import { MasonryGrid } from "../gallery/MasonryGrid";
 
 import type { Favorite } from "../../types/artwork";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
@@ -16,9 +17,11 @@ type DrawerProps = {
   favorites: Favorite[];
   loading: boolean;
   error: string | null;
+  onSelect: (favorite: Favorite) => void;
+  onRemove: (artworkId: number) => void;
 };
 
-function Drawer({ isOpen, onClose, favorites, loading, error }: DrawerProps) {
+function Drawer({ isOpen, onClose, favorites, loading, error, onSelect, onRemove }: DrawerProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useFocusTrap(menuRef as React.RefObject<HTMLElement>, isOpen);
@@ -70,6 +73,7 @@ function Drawer({ isOpen, onClose, favorites, loading, error }: DrawerProps) {
               My Collection
             </h2>
             <Button
+              variant='ghost'
               size='icon-md'
               onClick={onClose}
               aria-label='Close drawer'
@@ -84,9 +88,11 @@ function Drawer({ isOpen, onClose, favorites, loading, error }: DrawerProps) {
               <p className='text-slate-500'>No favorites yet.</p>
             )}
             {!loading && !error && favorites.length > 0 && (
-              <div>
-                <p>Collection</p>
-              </div>
+              <MasonryGrid
+                favorites={favorites}
+                onSelect={onSelect}
+                onRemove={onRemove}
+              />
             )}
           </div>
         </div>
