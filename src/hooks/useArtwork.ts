@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { ArtworkWithImage } from "../types/artwork";
 
 import {
+  fetchArtworkById,
   fetchArtworkOfTheDay,
   fetchRandomArtwork,
   fetchSafeTotalPages,
@@ -48,11 +49,26 @@ function useArtwork() {
     }
   }
 
+  const loadArtworkById = useCallback(async (artworkId: number) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await fetchArtworkById(artworkId);
+      seenIds.current = [...seenIds.current, result.id];
+      setArtwork(result);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load artwork");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     loadArtworkOfTheDay();
   }, []);
 
-  return { artwork, loading, error, loadArtworkOfTheDay, loadRandomArtwork };
+  return { artwork, loading, error, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById };
 }
 
 export { useArtwork };
