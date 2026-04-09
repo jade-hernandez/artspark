@@ -1,15 +1,20 @@
+import { useEffect } from "react";
 import { useArtwork } from "../hooks/useArtwork";
-import { useAuth } from "../hooks/useAuth";
-import { useFavorites } from "../hooks/useFavorites";
 import { ArtworkDetail } from "../components/artwork/ArtworkDetail";
 import { Loader } from "../components/ui/Loader";
 
-function DiscoverPage() {
-  const { artwork, loading, error, loadRandomArtwork } = useArtwork();
+type DiscoverPageProps = {
+  selectedFavoriteId: number | null;
+};
 
-  // TODO: move to FavoritesContext + AuthContext in step 9 (auth implementation)
-  const { user } = useAuth();
-  useFavorites(user?.id ?? null);
+function DiscoverPage({ selectedFavoriteId }: DiscoverPageProps) {
+  const { artwork, loading, error, loadRandomArtwork, loadArtworkById } = useArtwork();
+
+  useEffect(() => {
+    if (selectedFavoriteId !== null) {
+      loadArtworkById(selectedFavoriteId);
+    }
+  }, [selectedFavoriteId, loadArtworkById]);
 
   function handleRequireAuth() {
     console.log("Auth required");
