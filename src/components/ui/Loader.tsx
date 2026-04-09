@@ -3,7 +3,7 @@ function Loader() {
     <div
       aria-label='Loading'
       role='status'
-      className='w-10 h-10 rounded-full border-4 border-[#E85D4A] border-t-transparent animate-spin'
+      className='border-accent h-10 w-10 animate-spin rounded-full border-4 border-t-transparent'
     />
   );
 }

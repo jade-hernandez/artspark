@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Button } from "../ui/Button";
 import { cn } from "../../utils/utils";
+import { HeartIcon } from "../icons/HeartIcon";
 
 type HeaderProps = {
   onOpenCollection: () => void;
@@ -20,14 +21,14 @@ function Header({ onOpenCollection }: HeaderProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full border border-[#E5E5E5] px-6 py-4 transition-all duration-300",
+        "border-border sticky top-0 z-50 w-full border px-6 py-4 transition-all duration-300",
         isScrolled
-          ? "border-[#E5E5E5] bg-white/80 shadow-sm backdrop-blur-md"
-          : "bg-[#FAFAFA]/80 backdrop-blur-sm"
+          ? "border-border bg-white/80 shadow-sm backdrop-blur-md"
+          : "bg-background/80 backdrop-blur-sm"
       )}
     >
       <div className='flex items-center justify-between'>
-        <span className='text-xl font-bold text-[#1A1A1A]'>ArtSpark</span>
+        <span className='text-text-primary text-xl font-bold'>ArtSpark</span>
 
         <Button
           variant='ghost'
@@ -35,19 +36,7 @@ function Header({ onOpenCollection }: HeaderProps) {
           aria-label='Open my collection'
           onClick={onOpenCollection}
         >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            width='20'
-            height='20'
-            fill='none'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='stroke-[#1A1A1A]'
-          >
-            <path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z' />
-          </svg>
+          <HeartIcon className='stroke-accent h-5 w-5 fill-none' />
           My Collection
         </Button>
       </div>
