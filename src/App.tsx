@@ -1,9 +1,7 @@
+import { DiscoverPage } from "./pages/DiscoverPage";
+
 function App() {
-  return (
-    <div className='flex min-h-screen items-center justify-center'>
-      <h1 className='text-2xl font-bold'>ArtSpark</h1>
-    </div>
-  );
+  return <DiscoverPage />;
 }
 
 export { App };
