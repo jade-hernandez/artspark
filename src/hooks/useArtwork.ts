@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+
 import type { ArtworkWithImage } from "../types/artwork";
+
 import {
   fetchArtworkOfTheDay,
   fetchRandomArtwork,
