@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { type ArtworkWithImage } from "../../types/artwork";
-
 import { Button } from "../ui/Button";
-
+import { Skeleton } from "../ui/Skeleton";
 import { FavoriteButton } from "./FavoriteButton";
-
 import { cn } from "../../utils/utils";
+import { LoaderIcon } from "../icons/LoaderIcon";
 
 type ArtworkDetailProps = {
   artwork: ArtworkWithImage;
   iiifUrl?: string;
   onDiscoverAnother: () => void;
-  onRequireAuth: () => void;
 };
 
-function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother, onRequireAuth }: ArtworkDetailProps) {
+function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailProps) {
   const [showDescription, setShowDescription] = useState(false);
+  const [showAuthMessage, setShowAuthMessage] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const baseIiifUrl = iiifUrl ?? "https://www.artic.edu/iiif/2";
   const imageUrl = `${baseIiifUrl}/${artwork.image_id}/full/843,/0/default.jpg`;
@@ -29,12 +29,18 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother, onRequireAuth }: A
 
   return (
     <div className='animate-fade-in mx-auto flex max-w-2xl flex-col items-center gap-8 px-6 py-12'>
-      <img
-        src={imageUrl}
-        alt={artwork.title}
-        loading='lazy'
-        className='max-h-[70vh] w-full object-contain'
-      />
+      <div className='relative w-full'>
+        {!imageLoaded && <Skeleton className='aspect-4/3 max-h-[70vh] w-full' />}
+        <img
+          src={imageUrl}
+          alt={artwork.title}
+          onLoad={() => setImageLoaded(true)}
+          className={cn(
+            "max-h-[70vh] w-full object-contain transition-opacity duration-500",
+            imageLoaded ? "opacity-100" : "absolute inset-0 opacity-0"
+          )}
+        />
+      </div>
 
       <div className='flex flex-col items-center gap-2 text-center'>
         <h1 className='text-3xl font-semibold text-[#1A1A1A]'>{artwork.title}</h1>
@@ -46,34 +52,26 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother, onRequireAuth }: A
         {metadataLine && <p className='text-sm text-[#6B6B6B]'>{metadataLine}</p>}
       </div>
 
-      <div className='flex items-center gap-4'>
-        <FavoriteButton
-          artwork={artwork}
-          onRequireAuth={onRequireAuth}
-        />
+      <div className='flex flex-col items-center gap-3'>
+        <div className='flex items-center gap-4'>
+          <FavoriteButton
+            artwork={artwork}
+            onUnauthenticated={() => setShowAuthMessage(true)}
+          />
 
-        <Button
-          variant='outline'
-          size='md'
-          onClick={onDiscoverAnother}
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            width='16'
-            height='16'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
+          <Button
+            variant='outline'
+            size='md'
+            onClick={onDiscoverAnother}
           >
-            <polyline points='23 4 23 10 17 10' />
-            <polyline points='1 20 1 14 7 14' />
-            <path d='M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15' />
-          </svg>
-          Discover another
-        </Button>
+            <LoaderIcon />
+            Discover another
+          </Button>
+        </div>
+
+        {showAuthMessage && (
+          <p className='text-center text-sm text-[#6B6B6B]'>Sign in to save favorites</p>
+        )}
       </div>
 
       {artwork.description && (
