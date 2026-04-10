@@ -1,6 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import type { Favorite, FavoriteInsert } from "../types/artwork";
+
 import { supabase } from "../lib/supabase";
+
+import type { Favorite, FavoriteInsert } from "../types/artwork";
+
 import { useAuthContext } from "./AuthContext";
 
 type FavoritesContextValue = {

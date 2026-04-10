@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Modal } from "../ui/Modal";
-import { Button } from "../ui/Button";
+
+import { Button, Modal } from "../ui";
+
 import { useAuthContext } from "../../contexts/AuthContext";
 
 type AuthModalProps = {

@@ -1,10 +1,13 @@
 import { useState } from "react";
+
 import { type ArtworkWithImage } from "../../types/artwork";
-import { Button } from "../ui/Button";
-import { Skeleton } from "../ui/Skeleton";
-import { FavoriteButton } from "./FavoriteButton";
-import { cn } from "../../utils/utils";
+
 import { LoaderIcon } from "../icons/LoaderIcon";
+import { Button, Skeleton } from "../ui";
+
+import { FavoriteButton } from "./FavoriteButton";
+
+import { cn } from "../../utils/utils";
 
 type ArtworkDetailProps = {
   artwork: ArtworkWithImage;

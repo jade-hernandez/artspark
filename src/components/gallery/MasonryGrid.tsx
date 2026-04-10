@@ -1,5 +1,6 @@
-import type { Favorite } from "../../types/artwork";
 import { ArtworkCard } from "../artwork/ArtworkCard";
+
+import type { Favorite } from "../../types/artwork";
 
 type MasonryGridProps = {
   favorites: Favorite[];

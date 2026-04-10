@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import type { Favorite, FavoriteInsert } from "../types/artwork";
+
 import { supabase } from "../lib/supabase";
+
+import type { Favorite, FavoriteInsert } from "../types/artwork";
 
 function useFavorites(userId: string | null) {
   const [favorites, setFavorites] = useState<Favorite[]>([]);

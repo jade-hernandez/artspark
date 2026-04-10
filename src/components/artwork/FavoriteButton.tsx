@@ -1,9 +1,12 @@
+import { useState } from "react";
+
 import { type ArtworkWithImage, type FavoriteInsert } from "../../types/artwork";
+
 import { HeartIcon } from "../icons/HeartIcon";
-import { cn } from "../../utils/utils";
+
 import { useFavoritesContext } from "../../contexts/FavoritesContext";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useState } from "react";
+import { cn } from "../../utils/utils";
 
 type FavoriteButtonProps = {
   artwork: ArtworkWithImage;

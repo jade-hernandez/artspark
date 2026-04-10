@@ -1,7 +1,10 @@
 import { useEffect, useRef, type ReactNode } from "react";
-import { Portal } from "./Portal";
-import { cn } from "../../utils/utils";
+
 import { useFocusTrap } from "../../hooks/useFocusTrap";
+
+import { Portal } from "./Portal";
+
+import { cn } from "../../utils/utils";
 
 type ModalProps = {
   isOpen: boolean;

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+
 import { useArtwork } from "../hooks/useArtwork";
 import { ArtworkDetail } from "../components/artwork/ArtworkDetail";
+
 import { Skeleton } from "../components/ui";
 
 type DiscoverPageProps = {

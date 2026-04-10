@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button } from "../ui/Button";
-import { cn } from "../../utils/utils";
-import { HeartIcon } from "../icons/HeartIcon";
+
 import { useAuthContext } from "../../contexts/AuthContext";
+
+import { Button } from "../ui/Button";
+import { HeartIcon } from "../icons/HeartIcon";
+
+import { cn } from "../../utils/utils";
 
 type HeaderProps = {
   onOpenCollection: () => void;

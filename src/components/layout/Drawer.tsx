@@ -1,13 +1,15 @@
 import { useEffect, useRef } from "react";
+
 import { useFavoritesContext } from "../../contexts/FavoritesContext";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
-import { Portal } from "../ui/Portal";
-import { Button } from "../ui/Button";
-import { Loader } from "../ui/Loader";
+
+import type { Favorite } from "../../types/artwork";
+
 import { MasonryGrid } from "../gallery/MasonryGrid";
 import { CloseIcon } from "../icons/CloseIcon";
+import { Button, Loader, Portal } from "../ui";
+
 import { cn } from "../../utils/utils";
-import type { Favorite } from "../../types/artwork";
 
 type DrawerProps = {
   isOpen: boolean;
