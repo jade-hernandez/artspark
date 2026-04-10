@@ -52,7 +52,7 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
   async function addFavorite(favorite: FavoriteInsert) {
     const { data, error: insertError } = await supabase
       .from("favorites")
-      .insert(favorite)
+      .insert({ ...favorite, user_id: userId })
       .select()
       .single();
 
@@ -81,7 +81,9 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <FavoritesContext.Provider value={{ favorites, loading, error, addFavorite, removeFavorite, isFavorite }}>
+    <FavoritesContext.Provider
+      value={{ favorites, loading, error, addFavorite, removeFavorite, isFavorite }}
+    >
       {children}
     </FavoritesContext.Provider>
   );
