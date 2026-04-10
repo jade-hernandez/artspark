@@ -1,10 +1,10 @@
 import { type ArtworkWithImage, type FavoriteInsert } from "../../types/artwork";
-import { useAuth } from "../../hooks/useAuth";
-import { useFavorites } from "../../hooks/useFavorites";
 
 import { HeartIcon } from "../icons/HeartIcon";
 
 import { cn } from "../../utils/utils";
+import { useFavoritesContext } from "../../contexts/FavoritesContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 type FavoriteButtonProps = {
   artwork: ArtworkWithImage;
@@ -12,8 +12,8 @@ type FavoriteButtonProps = {
 };
 
 function FavoriteButton({ artwork, onRequireAuth }: FavoriteButtonProps) {
-  const { user } = useAuth();
-  const { isFavorite, addFavorite, removeFavorite } = useFavorites(user?.id ?? null);
+  const { user } = useAuthContext();
+  const { isFavorite, addFavorite, removeFavorite } = useFavoritesContext();
 
   const isActive = isFavorite(artwork.id);
 
