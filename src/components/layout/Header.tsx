@@ -25,12 +25,12 @@ function Header({ onOpenCollection }: HeaderProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-20 w-full border-b border-[#E5E5E5] px-6 py-4 transition-all duration-300",
-        isScrolled ? "bg-white/80 shadow-sm backdrop-blur-md" : "bg-[#FAFAFA]/80 backdrop-blur-sm"
+        "border-border sticky top-0 z-20 w-full border-b px-6 py-4 transition-all duration-300",
+        isScrolled ? "bg-white/80 shadow-sm backdrop-blur-md" : "bg-background/80 backdrop-blur-sm"
       )}
     >
       <div className='flex items-center justify-between'>
-        <span className='text-xl font-bold text-[#1A1A1A]'>ArtSpark</span>
+        <span className='text-text-primary text-xl font-bold'>ArtSpark</span>
 
         <div className='flex items-center gap-3'>
           <Button
@@ -47,7 +47,7 @@ function Header({ onOpenCollection }: HeaderProps) {
             aria-label='Open my collection'
             onClick={onOpenCollection}
           >
-            <HeartIcon className='h-5 w-5 fill-none stroke-[#E85D4A]' />
+            <HeartIcon className='stroke-accent h-5 w-5 fill-none' />
           </Button>
         </div>
       </div>

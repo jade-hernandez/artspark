@@ -5,10 +5,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-[#E85D4A] text-white hover:bg-[#D14A38] focus-visible:ring-[#E85D4A] ",
+        primary: "bg-accent text-white hover:bg-accent-hover focus-visible:ring-accent ",
         outline:
-          "border border-[#E5E5E5] bg-transparent text-[#1A1A1A] hover:bg-[#F0F0F0] focus-visible:ring-[#E5E5E5] ",
-        ghost: "bg-transparent text-[#1A1A1A] hover:bg-[#F0F0F0] focus-visible:ring-[#E5E5E5] ",
+          "border border-border bg-transparent text-text-primary hover:bg-surface focus-visible:ring-border ",
+        ghost: "bg-transparent text-text-primary hover:bg-surface focus-visible:ring-border ",
       },
       size: {
         md: "px-4 py-2 text-sm rounded-md gap-2",

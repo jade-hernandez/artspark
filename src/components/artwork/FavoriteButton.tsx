@@ -51,12 +51,12 @@ function FavoriteButton({ artwork, onUnauthenticated }: FavoriteButtonProps) {
         aria-label={isActive ? "Remove from favorites" : "Add to favorites"}
         aria-pressed={isActive}
         onClick={handleClick}
-        className='inline-flex items-center justify-center rounded-full p-2 transition-transform duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E85D4A] focus-visible:ring-offset-2 active:scale-95'
+        className='focus-visible:ring-accent inline-flex items-center justify-center rounded-full p-2 transition-transform duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-95'
       >
         <HeartIcon
           className={cn(
             "transition-colors duration-200",
-            isActive ? "fill-[#E85D4A] stroke-[#E85D4A]" : "fill-none stroke-[#E85D4A]"
+            isActive ? "fill-accent stroke-accent" : "stroke-accent fill-none"
           )}
         />
       </button>
@@ -64,7 +64,7 @@ function FavoriteButton({ artwork, onUnauthenticated }: FavoriteButtonProps) {
       {error && (
         <p
           role='alert'
-          className='text-center text-sm text-[#E85D4A]'
+          className='text-accent text-center text-sm'
         >
           {error}
         </p>

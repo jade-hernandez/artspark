@@ -56,14 +56,14 @@ function Drawer({ isOpen, onClose, onSelect }: DrawerProps) {
           ref={menuRef}
           onClick={e => e.stopPropagation()}
           className={cn(
-            "fixed inset-y-0 right-0 z-50 flex h-screen w-full flex-col bg-[#F0F0F0] shadow-lg transition-transform duration-300 ease-in-out md:w-100",
+            "bg-surface fixed inset-y-0 right-0 z-50 flex h-screen w-full flex-col shadow-lg transition-transform duration-300 ease-in-out md:w-100",
             isOpen ? "translate-x-0" : "translate-x-full"
           )}
         >
-          <div className='flex items-center justify-between border-b border-[#E5E5E5] px-6 py-4'>
+          <div className='border-border flex items-center justify-between border-b px-6 py-4'>
             <h2
               id='drawer-title'
-              className='text-xl font-semibold text-[#1A1A1A]'
+              className='text-text-primary text-xl font-semibold'
             >
               My Collection
             </h2>
@@ -81,7 +81,7 @@ function Drawer({ isOpen, onClose, onSelect }: DrawerProps) {
             {loading && <Loader />}
             {error && <p className='text-red-600'>Something went wrong. Please try again.</p>}
             {!loading && !error && favorites.length === 0 && (
-              <p className='text-[#6B6B6B]'>No favorites yet.</p>
+              <p className='text-text-secondary'>No favorites yet.</p>
             )}
             {!loading && !error && favorites.length > 0 && (
               <MasonryGrid

@@ -1,5 +1,6 @@
 import type { Favorite } from "../../types/artwork";
 import { CloseIcon } from "../icons/CloseIcon";
+import { Button } from "../ui";
 
 type ArtworkCardProps = {
   favorite: Favorite;
@@ -17,7 +18,6 @@ function ArtworkCard({ favorite, onSelect, onRemove }: ArtworkCardProps) {
 
   return (
     <div
-      className='group relative cursor-pointer overflow-hidden rounded-lg bg-white transition-all duration-150 ease-in-out hover:scale-[1.02] hover:shadow-md'
       onClick={onSelect}
       role='button'
       tabIndex={0}
@@ -25,6 +25,7 @@ function ArtworkCard({ favorite, onSelect, onRemove }: ArtworkCardProps) {
       onKeyDown={e => {
         if (e.key === "Enter" || e.key === " ") onSelect();
       }}
+      className='relative cursor-pointer overflow-hidden rounded-lg bg-white transition-all duration-150 ease-in-out hover:scale-[1.02] hover:shadow-md'
     >
       <div className='relative'>
         <img
@@ -32,17 +33,21 @@ function ArtworkCard({ favorite, onSelect, onRemove }: ArtworkCardProps) {
           alt={favorite.title}
           className='aspect-square w-full object-cover'
         />
-        <button
+        <Button
+          variant='ghost'
+          size='icon-md'
           onClick={handleRemove}
           aria-label={`Remove ${favorite.title} from favorites`}
-          className='absolute top-1.5 right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-sm leading-none text-[#1A1A1A] opacity-0 transition-opacity duration-150 ease-in-out group-hover:opacity-100 hover:bg-white'
+          className='text-text-primary absolute top-1.5 right-1.5 rounded-full bg-white/90 hover:bg-white'
         >
           <CloseIcon />
-        </button>
+        </Button>
       </div>
       <div className='px-2 py-2'>
-        <p className='truncate text-sm font-medium text-[#1A1A1A]'>{favorite.title}</p>
-        {favorite.artist && <p className='truncate text-xs text-[#6B6B6B]'>{favorite.artist}</p>}
+        <p className='text-text-primary truncate text-sm font-medium'>{favorite.title}</p>
+        {favorite.artist && (
+          <p className='text-text-secondary truncate text-xs'>{favorite.artist}</p>
+        )}
       </div>
     </div>
   );

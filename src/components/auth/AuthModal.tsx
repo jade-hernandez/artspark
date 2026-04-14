@@ -55,7 +55,7 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
     >
       <h2
         id={titleId}
-        className='mb-6 text-xl font-semibold text-[#1A1A1A]'
+        className='text-text-primary mb-6 text-xl font-semibold'
       >
         {mode === "signin" ? "Welcome back" : "Create an account"}
       </h2>
@@ -64,7 +64,7 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
         <div className='flex flex-col gap-1'>
           <label
             htmlFor='auth-email'
-            className='text-sm font-medium text-[#1A1A1A]'
+            className='text-text-primary text-sm font-medium'
           >
             Email
           </label>
@@ -74,14 +74,14 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
             value={email}
             onChange={e => setEmail(e.target.value)}
             autoComplete='email'
-            className='rounded-md border border-[#E5E5E5] px-3 py-2 text-sm text-[#1A1A1A] outline-none focus:border-[#1A1A1A]'
+            className='border-border text-text-primary focus:border-text-primary rounded-md border px-3 py-2 text-sm outline-none'
           />
         </div>
 
         <div className='flex flex-col gap-1'>
           <label
             htmlFor='auth-password'
-            className='text-sm font-medium text-[#1A1A1A]'
+            className='text-text-primary text-sm font-medium'
           >
             Password
           </label>
@@ -91,14 +91,14 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
             value={password}
             onChange={e => setPassword(e.target.value)}
             autoComplete={mode === "signin" ? "current-password" : "new-password"}
-            className='rounded-md border border-[#E5E5E5] px-3 py-2 text-sm text-[#1A1A1A] outline-none focus:border-[#1A1A1A]'
+            className='border-border text-text-primary focus:border-text-primary rounded-md border px-3 py-2 text-sm outline-none'
           />
         </div>
 
         {error && (
           <p
             aria-live='polite'
-            className='text-sm text-[#E85D4A]'
+            className='text-accent text-sm'
           >
             {error}
           </p>
@@ -115,13 +115,13 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
         </Button>
       </div>
 
-      <p className='mt-6 text-center text-sm text-[#6B6B6B]'>
+      <p className='text-text-secondary mt-6 text-center text-sm'>
         {mode === "signin" ? (
           <>
             Don't have an account?{" "}
             <button
               onClick={() => setMode("signup")}
-              className='font-medium text-[#1A1A1A] underline underline-offset-2'
+              className='text-text-primary font-medium underline underline-offset-2'
             >
               Sign up
             </button>
@@ -131,7 +131,7 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
             Already have an account?{" "}
             <button
               onClick={() => setMode("signin")}
-              className='font-medium text-[#1A1A1A] underline underline-offset-2'
+              className='text-text-primary font-medium underline underline-offset-2'
             >
               Sign in
             </button>

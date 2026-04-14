@@ -49,13 +49,13 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
       </div>
 
       <div className='flex flex-col items-center gap-2 text-center'>
-        <h1 className='text-3xl font-semibold text-[#1A1A1A]'>{artwork.title}</h1>
+        <h1 className='text-text-primary text-3xl font-semibold'>{artwork.title}</h1>
 
         {artwork.artist_title && (
-          <p className='text-lg font-medium text-[#1A1A1A]'>{artwork.artist_title}</p>
+          <p className='text-text-primary text-lg font-medium'>{artwork.artist_title}</p>
         )}
 
-        {metadataLine && <p className='text-sm text-[#6B6B6B]'>{metadataLine}</p>}
+        {metadataLine && <p className='text-text-secondary text-sm'>{metadataLine}</p>}
       </div>
 
       <div className='flex flex-col items-center gap-3'>
@@ -76,7 +76,7 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
         </div>
 
         {showAuthMessage && (
-          <p className='text-center text-sm text-[#6B6B6B]'>Sign in to save favorites</p>
+          <p className='text-text-secondary text-center text-sm'>Sign in to save favorites</p>
         )}
       </div>
 
@@ -85,7 +85,7 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
           <div className='relative w-full'>
             <div
               className={cn(
-                "overflow-hidden text-left text-base leading-relaxed text-[#1A1A1A] transition-[max-height] duration-500 ease-in-out",
+                "text-text-primary overflow-hidden text-left text-base leading-relaxed transition-[max-height] duration-500 ease-in-out",
                 showDescription ? "max-h-500" : "max-h-24"
               )}
               dangerouslySetInnerHTML={{ __html: artwork.description }}
@@ -94,7 +94,7 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
             {!showDescription && (
               <div
                 aria-hidden='true'
-                className='pointer-events-none absolute bottom-0 left-0 h-16 w-full bg-linear-to-t from-[#FAFAFA] to-transparent'
+                className='from-background pointer-events-none absolute bottom-0 left-0 h-16 w-full bg-linear-to-t to-transparent'
               />
             )}
           </div>

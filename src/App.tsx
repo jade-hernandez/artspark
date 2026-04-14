@@ -18,7 +18,7 @@ function App() {
   return (
     <AuthProvider>
       <FavoritesProvider>
-        <div className='min-h-screen bg-[#FAFAFA]'>
+        <div className='bg-background min-h-screen'>
           <Header onOpenCollection={() => setIsDrawerOpen(true)} />
           <DiscoverPage selectedFavoriteId={selectedFavoriteId} />
           <Drawer

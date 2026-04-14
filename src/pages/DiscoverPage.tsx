@@ -38,7 +38,7 @@ function DiscoverPage({ selectedFavoriteId }: DiscoverPageProps) {
       {error && (
         <p
           role='alert'
-          className='py-12 text-center text-[#6B6B6B]'
+          className='text-text-secondary py-12 text-center'
         >
           Something went wrong. Please try again later.
         </p>
