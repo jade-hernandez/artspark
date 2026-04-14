@@ -3,7 +3,7 @@ import { useState } from "react";
 import { type ArtworkWithImage } from "../../types/artwork";
 
 import { LoaderIcon } from "../icons/LoaderIcon";
-import { Button, Skeleton } from "../ui";
+import { Button, Lightbox, Skeleton } from "../ui";
 
 import { FavoriteButton } from "./FavoriteButton";
 
@@ -19,9 +19,11 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
   const [showDescription, setShowDescription] = useState(false);
   const [showAuthMessage, setShowAuthMessage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const baseIiifUrl = iiifUrl ?? "https://www.artic.edu/iiif/2";
   const imageUrl = `${baseIiifUrl}/${artwork.image_id}/full/843,/0/default.jpg`;
+  const imageUrlHD = `${baseIiifUrl}/${artwork.image_id}/full/1686,/0/default.jpg`;
 
   const metadataParts = [
     artwork.date_display,
@@ -31,15 +33,16 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
   const metadataLine = metadataParts.join(" · ");
 
   return (
-    <div className='animate-fade-in mx-auto flex max-w-2xl flex-col items-center gap-8 px-6 py-12'>
-      <div className='relative w-full'>
-        {!imageLoaded && <Skeleton className='aspect-4/3 max-h-[70vh] w-full' />}
+    <div className='animate-fade-in mx-auto flex w-[calc(100%-2rem)] max-w-2xl flex-col items-center gap-8 py-12'>
+      <div className='relative h-100 w-full md:h-125'>
+        {!imageLoaded && <Skeleton className='h-full w-full' />}
         <img
           src={imageUrl}
           alt={artwork.title}
           onLoad={() => setImageLoaded(true)}
+          onClick={() => setIsLightboxOpen(true)}
           className={cn(
-            "max-h-[70vh] w-full object-contain transition-opacity duration-500",
+            "h-full w-full cursor-zoom-in object-contain transition-opacity duration-500",
             imageLoaded ? "opacity-100" : "absolute inset-0 opacity-0"
           )}
         />
@@ -107,6 +110,12 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
           </Button>
         </div>
       )}
+      <Lightbox
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        imageUrl={imageUrlHD}
+        alt={artwork.title}
+      />
     </div>
   );
 }
