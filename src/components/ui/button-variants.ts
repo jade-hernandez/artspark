@@ -8,7 +8,7 @@ const buttonVariants = cva(
         primary: "bg-accent text-white hover:bg-accent-hover focus-visible:ring-accent ",
         outline:
           "border border-border bg-transparent text-text-primary hover:bg-surface focus-visible:ring-border ",
-        ghost: "bg-transparent text-text-primary hover:bg-surface focus-visible:ring-border ",
+        ghost: "bg-transparent text-text-primary focus-visible:ring-border ",
       },
       size: {
         md: "px-4 py-2 text-sm rounded-md gap-2",

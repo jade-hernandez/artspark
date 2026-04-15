@@ -7,6 +7,7 @@ import { HeartIcon } from "../icons/HeartIcon";
 import { useFavoritesContext } from "../../contexts/FavoritesContext";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { cn } from "../../utils/utils";
+import { Button } from "../ui";
 
 type FavoriteButtonProps = {
   artwork: ArtworkWithImage;
@@ -47,11 +48,13 @@ function FavoriteButton({ artwork, onUnauthenticated }: FavoriteButtonProps) {
 
   return (
     <div className='flex flex-col items-center gap-2'>
-      <button
+      <Button
+        variant='ghost'
+        size='icon-md'
         aria-label={isActive ? "Remove from favorites" : "Add to favorites"}
         aria-pressed={isActive}
         onClick={handleClick}
-        className='focus-visible:ring-accent inline-flex items-center justify-center rounded-full p-2 transition-transform duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-95'
+        className='inline-flex items-center justify-center rounded-full border-none p-2 transition-transform duration-200 hover:scale-110 focus:outline-none active:scale-95'
       >
         <HeartIcon
           className={cn(
@@ -59,7 +62,7 @@ function FavoriteButton({ artwork, onUnauthenticated }: FavoriteButtonProps) {
             isActive ? "fill-accent stroke-accent" : "stroke-accent fill-none"
           )}
         />
-      </button>
+      </Button>
 
       {error && (
         <p
