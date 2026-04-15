@@ -4,7 +4,7 @@ import { supabase } from "../lib/supabase";
 
 import type { Favorite, FavoriteInsert } from "../types/artwork";
 
-import { useAuthContext } from "./AuthContext";
+import { AuthContext } from "./AuthContext";
 
 type FavoritesContextValue = {
   favorites: Favorite[];
@@ -18,7 +18,8 @@ type FavoritesContextValue = {
 const FavoritesContext = createContext<FavoritesContextValue | null>(null);
 
 function FavoritesProvider({ children }: { children: React.ReactNode }) {
-  const { user } = useAuthContext();
+  const authContext = useContext(AuthContext);
+  const user = authContext?.user ?? null;
   const userId = user?.id ?? null;
 
   const [favorites, setFavorites] = useState<Favorite[]>([]);
