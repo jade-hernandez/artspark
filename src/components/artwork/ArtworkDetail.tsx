@@ -39,6 +39,8 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
         <img
           src={imageUrl}
           alt={artwork.title}
+          width={843}
+          height={843}
           onLoad={() => setImageLoaded(true)}
           onClick={() => setIsLightboxOpen(true)}
           className={cn(

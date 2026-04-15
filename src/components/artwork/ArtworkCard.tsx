@@ -31,6 +31,8 @@ function ArtworkCard({ favorite, onSelect, onRemove }: ArtworkCardProps) {
         <img
           src={thumbnailUrl}
           alt={favorite.title}
+          width={400}
+          height={400}
           className='aspect-square w-full object-cover'
         />
         <Button
