@@ -60,62 +60,69 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
         {mode === "signin" ? "Welcome back" : "Create an account"}
       </h2>
 
-      <div className='flex flex-col gap-5'>
-        <div className='flex flex-col gap-1'>
-          <label
-            htmlFor='auth-email'
-            className='text-text-primary text-sm font-medium'
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <div className='flex flex-col gap-5'>
+          <div className='flex flex-col gap-1'>
+            <label
+              htmlFor='auth-email'
+              className='text-text-primary text-base font-medium'
+            >
+              Email
+            </label>
+            <input
+              id='auth-email'
+              type='email'
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              autoComplete='email'
+              className='border-border text-text-primary focus:border-text-primary rounded-md border px-3 py-2 text-base outline-none'
+            />
+          </div>
+
+          <div className='flex flex-col gap-1'>
+            <label
+              htmlFor='auth-password'
+              className='text-text-primary text-base font-medium'
+            >
+              Password
+            </label>
+            <input
+              id='auth-password'
+              type='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              autoComplete={mode === "signin" ? "current-password" : "new-password"}
+              className='border-border text-text-primary focus:border-text-primary rounded-md border px-3 py-2 text-base outline-none'
+            />
+          </div>
+
+          {error && (
+            <p
+              aria-live='polite'
+              className='text-accent text-base'
+            >
+              {error}
+            </p>
+          )}
+
+          <Button
+            type='submit'
+            variant='primary'
+            size='lg'
+            className='w-full'
+            disabled={loading}
           >
-            Email
-          </label>
-          <input
-            id='auth-email'
-            type='email'
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            autoComplete='email'
-            className='border-border text-text-primary focus:border-text-primary rounded-md border px-3 py-2 text-sm outline-none'
-          />
+            {loading ? "Loading..." : mode === "signin" ? "Sign in" : "Sign up"}
+          </Button>
         </div>
+      </form>
 
-        <div className='flex flex-col gap-1'>
-          <label
-            htmlFor='auth-password'
-            className='text-text-primary text-sm font-medium'
-          >
-            Password
-          </label>
-          <input
-            id='auth-password'
-            type='password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            autoComplete={mode === "signin" ? "current-password" : "new-password"}
-            className='border-border text-text-primary focus:border-text-primary rounded-md border px-3 py-2 text-sm outline-none'
-          />
-        </div>
-
-        {error && (
-          <p
-            aria-live='polite'
-            className='text-accent text-sm'
-          >
-            {error}
-          </p>
-        )}
-
-        <Button
-          variant='primary'
-          size='lg'
-          className='w-full'
-          disabled={loading}
-          onClick={handleSubmit}
-        >
-          {mode === "signin" ? "Sign in" : "Sign up"}
-        </Button>
-      </div>
-
-      <p className='text-text-secondary mt-6 text-center text-sm'>
+      <p className='text-text-secondary mt-6 text-center text-base'>
         {mode === "signin" ? (
           <>
             Don't have an account?{" "}
