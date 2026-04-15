@@ -74,6 +74,8 @@ function Lightbox({ isOpen, onClose, imageUrl, alt }: LightboxProps) {
         <img
           src={imageUrl}
           alt={alt}
+          width={1200}
+          height={1200}
           className='h-auto max-h-[85vh] w-auto max-w-[90vw] object-contain'
           onClick={e => e.stopPropagation()}
         />
