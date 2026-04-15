@@ -23,7 +23,9 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
 
   const baseIiifUrl = iiifUrl ?? "https://www.artic.edu/iiif/2";
   const imageUrl = `${baseIiifUrl}/${artwork.image_id}/full/843,/0/default.jpg`;
-  const imageUrlHD = `${baseIiifUrl}/${artwork.image_id}/full/full/0/default.jpg`;
+  const imageUrlHD = isLightboxOpen
+    ? `${baseIiifUrl}/${artwork.image_id}/full/full/0/default.jpg`
+    : "";
 
   const metadataParts = [
     artwork.date_display,
