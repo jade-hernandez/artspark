@@ -60,7 +60,7 @@ function Modal({ isOpen, onClose, children, labelledBy }: ModalProps) {
         <div
           ref={dialogRef}
           className={cn(
-            "relative z-10 w-full max-w-sm rounded-lg bg-white p-6 shadow-lg transition-all duration-250",
+            "relative z-10 w-[calc(100%-2rem)] max-w-sm rounded-lg bg-white p-6 shadow-lg transition-all duration-250",
             isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
           )}
         >

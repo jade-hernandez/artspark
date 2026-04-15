@@ -45,12 +45,19 @@ function Lightbox({ isOpen, onClose, imageUrl, alt }: LightboxProps) {
         ref={panelRef}
         role='dialog'
         aria-modal='true'
+        aria-labelledby='lightbox-title'
         className={cn(
           "fixed inset-0 z-50 flex items-center justify-center bg-black/90 transition-opacity duration-300",
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         )}
         onClick={onClose}
       >
+        <span
+          id='lightbox-title'
+          className='sr-only'
+        >
+          {alt}
+        </span>
         <Button
           variant='ghost'
           size='icon-md'
