@@ -2,22 +2,40 @@ import { useEffect } from "react";
 
 import { useArtwork } from "../hooks/useArtwork";
 import { ArtworkDetail } from "../components/artwork/ArtworkDetail";
-
 import { Skeleton } from "../components/ui";
 
+// Discriminated union that represents every possible display intention.
+// Exported so App.tsx can drive DiscoverPage without knowing its internals.
+type DisplayIntent =
+  | { type: "artwork-of-the-day" }
+  | { type: "random" }
+  | { type: "favorite"; artworkId: number };
+
 type DiscoverPageProps = {
-  selectedFavoriteId: number | null;
+  displayIntent: DisplayIntent;
+  onDiscoverAnother: () => void;
 };
 
-function DiscoverPage({ selectedFavoriteId }: DiscoverPageProps) {
-  console.log("DiscoverPage rendered with selectedFavoriteId:", selectedFavoriteId);
-  const { artwork, loading, error, loadRandomArtwork, loadArtworkById } = useArtwork();
+function DiscoverPage({ displayIntent, onDiscoverAnother }: DiscoverPageProps) {
+  const { artwork, loading, error, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById } =
+    useArtwork();
 
+  // Single effect, single source of truth.
+  // Every intent creates a new object reference in App, so this always re-runs
+  // even when the same favourite is selected twice in a row.
   useEffect(() => {
-    if (selectedFavoriteId !== null) {
-      loadArtworkById(selectedFavoriteId);
+    switch (displayIntent.type) {
+      case "artwork-of-the-day":
+        loadArtworkOfTheDay();
+        break;
+      case "random":
+        loadRandomArtwork();
+        break;
+      case "favorite":
+        loadArtworkById(displayIntent.artworkId);
+        break;
     }
-  }, [selectedFavoriteId, loadArtworkById]);
+  }, [displayIntent, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById]);
 
   return (
     <main
@@ -48,10 +66,7 @@ function DiscoverPage({ selectedFavoriteId }: DiscoverPageProps) {
         <ArtworkDetail
           key={artwork.id}
           artwork={artwork}
-          onDiscoverAnother={loadRandomArtwork}
-          // il appelle seulement loadRandomArtwork, il ne met pas à jour selectedFavoriteId,
-          // c'est pour ça que le useEffect de DiscoverPage ne se déclenche pas
-          // et ne recharge pas un nouvel artwork
+          onDiscoverAnother={onDiscoverAnother}
         />
       )}
     </main>
@@ -59,3 +74,4 @@ function DiscoverPage({ selectedFavoriteId }: DiscoverPageProps) {
 }
 
 export { DiscoverPage };
+export type { DisplayIntent };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import type { ArtworkWithImage } from "../types/artwork";
 
@@ -16,7 +16,9 @@ function useArtwork() {
 
   const seenIds = useRef<number[]>([]);
 
-  async function loadArtworkOfTheDay() {
+  // useCallback with [] is safe here: seenIds is a ref (stable by design),
+  // and all fetch functions are stable module-level imports.
+  const loadArtworkOfTheDay = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -25,15 +27,14 @@ function useArtwork() {
 
       seenIds.current = [...seenIds.current, result.id];
       setArtwork(result);
-      console.log("Artwork of the day ID:", result.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load artwork of the day");
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
-  async function loadRandomArtwork() {
+  const loadRandomArtwork = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -43,13 +44,12 @@ function useArtwork() {
 
       seenIds.current = [...seenIds.current, result.id];
       setArtwork(result);
-      console.log("Random artwork ID:", result.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load random artwork");
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   const loadArtworkById = useCallback(async (artworkId: number) => {
     setLoading(true);
@@ -66,9 +66,9 @@ function useArtwork() {
     }
   }, []);
 
-  useEffect(() => {
-    loadArtworkOfTheDay();
-  }, []);
+  // Note: the initial artwork-of-the-day load has been intentionally removed.
+  // It is now driven by the DisplayIntent mechanism in DiscoverPage,
+  // which initialises with { type: "artwork-of-the-day" }.
 
   return { artwork, loading, error, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById };
 }
