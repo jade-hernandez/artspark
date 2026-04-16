@@ -10,6 +10,7 @@ type DiscoverPageProps = {
 };
 
 function DiscoverPage({ selectedFavoriteId }: DiscoverPageProps) {
+  console.log("DiscoverPage rendered with selectedFavoriteId:", selectedFavoriteId);
   const { artwork, loading, error, loadRandomArtwork, loadArtworkById } = useArtwork();
 
   useEffect(() => {
@@ -48,6 +49,9 @@ function DiscoverPage({ selectedFavoriteId }: DiscoverPageProps) {
           key={artwork.id}
           artwork={artwork}
           onDiscoverAnother={loadRandomArtwork}
+          // il appelle seulement loadRandomArtwork, il ne met pas à jour selectedFavoriteId,
+          // c'est pour ça que le useEffect de DiscoverPage ne se déclenche pas
+          // et ne recharge pas un nouvel artwork
         />
       )}
     </main>

@@ -25,6 +25,7 @@ function useArtwork() {
 
       seenIds.current = [...seenIds.current, result.id];
       setArtwork(result);
+      console.log("Artwork of the day ID:", result.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load artwork of the day");
     } finally {
@@ -42,6 +43,7 @@ function useArtwork() {
 
       seenIds.current = [...seenIds.current, result.id];
       setArtwork(result);
+      console.log("Random artwork ID:", result.id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load random artwork");
     } finally {

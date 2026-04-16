@@ -68,11 +68,13 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
             artwork={artwork}
             onUnauthenticated={() => setShowAuthMessage(true)}
           />
-
           <Button
             variant='outline'
             size='md'
-            onClick={onDiscoverAnother}
+            onClick={() => {
+              console.log("Discover another clicked, selectedFavoriteId should reset to null");
+              onDiscoverAnother();
+            }}
           >
             <LoaderIcon />
             Discover another
