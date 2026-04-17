@@ -1,4 +1,4 @@
-function getPageForToday(totalPages: number): number {
+function getArtworkOfTheDay(totalPages: number): number {
   const today = new Date().toISOString().split("T")[0];
   let hash = 0;
   for (let i = 0; i < today.length; i++) {
@@ -8,4 +8,4 @@ function getPageForToday(totalPages: number): number {
   return (Math.abs(hash) % totalPages) + 1;
 }
 
-export { getPageForToday };
+export { getArtworkOfTheDay };

@@ -156,7 +156,7 @@ https://www.artic.edu/iiif/2/{image_id}/full/{size}/0/default.jpg
 Use a deterministic hash of today's date to compute a page number. All users see the same artwork on the same day.
 
 ```ts
-function getPageForToday(totalPages: number): number {
+function getArtworkOfTheDay(totalPages: number): number {
   const today = new Date().toISOString().split("T")[0];
   let hash = 0;
   for (let i = 0; i < today.length; i++) {

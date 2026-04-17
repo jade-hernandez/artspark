@@ -1,4 +1,4 @@
-import { getPageForToday } from "../lib/artwork-of-the-day";
+import { getArtworkOfTheDay } from "../lib/artwork-of-the-day";
 import type {
   ArtworkWithImage,
   ArtworkSearchApiResponse,
@@ -94,7 +94,7 @@ async function fetchRandomArtwork(
 
 async function fetchArtworkOfTheDay(): Promise<ArtworkWithImage> {
   const totalPages = await fetchSafeTotalPages();
-  const todayPage = getPageForToday(totalPages);
+  const todayPage = getArtworkOfTheDay(totalPages);
   const getPage = (attempt: number) => ((todayPage - 1 + attempt) % totalPages) + 1;
 
   return fetchArtworkWithRetry(getPage);
