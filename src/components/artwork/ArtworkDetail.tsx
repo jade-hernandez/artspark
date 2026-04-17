@@ -20,6 +20,7 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
   const [showAuthMessage, setShowAuthMessage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const baseIiifUrl = iiifUrl ?? "https://www.artic.edu/iiif/2";
   const imageUrl = `${baseIiifUrl}/${artwork.image_id}/full/843,/0/default.jpg`;
@@ -37,17 +38,27 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
   return (
     <div className='animate-fade-in mx-auto flex w-[calc(100%-2rem)] max-w-2xl flex-col items-center gap-8 py-12'>
       <div className='relative h-100 w-full md:h-125'>
-        {!imageLoaded && <Skeleton className='h-full w-full' />}
+        {!imageLoaded && !imageError && <Skeleton className='h-full w-full' />}
+        {imageError && (
+          <div className='flex h-full w-full items-center justify-center'>
+            <p className='text-text-secondary text-sm'>Image unavailable</p>
+          </div>
+        )}
         <img
           src={imageUrl}
           alt={artwork.title}
           width={843}
           height={843}
           onLoad={() => setImageLoaded(true)}
-          onClick={() => setIsLightboxOpen(true)}
+          onError={() => {
+            setImageLoaded(true);
+            setImageError(true);
+          }}
+          onClick={() => !imageError && setIsLightboxOpen(true)}
           className={cn(
-            "h-full w-full cursor-zoom-in object-contain transition-opacity duration-500",
-            imageLoaded ? "opacity-100" : "absolute inset-0 opacity-0"
+            "h-full w-full object-contain transition-opacity duration-500",
+            imageLoaded ? "opacity-100" : "absolute inset-0 opacity-0",
+            imageError ? "hidden" : "cursor-zoom-in"
           )}
         />
       </div>
