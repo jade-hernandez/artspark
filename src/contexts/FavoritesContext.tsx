@@ -45,7 +45,6 @@ function FavoritesProvider({ children }: { children: React.ReactNode }) {
         setError(fetchError.message);
       } else {
         setFavorites(data ?? []);
-        console.log("Loaded favorites:", data);
       }
 
       setLoading(false);

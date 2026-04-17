@@ -16,8 +16,6 @@ function useArtwork() {
 
   const seenIds = useRef<number[]>([]);
 
-  // useCallback with [] is safe here: seenIds is a ref (stable by design),
-  // and all fetch functions are stable module-level imports.
   const loadArtworkOfTheDay = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -65,10 +63,6 @@ function useArtwork() {
       setLoading(false);
     }
   }, []);
-
-  // Note: the initial artwork-of-the-day load has been intentionally removed.
-  // It is now driven by the DisplayIntent mechanism in DiscoverPage,
-  // which initialises with { type: "artwork-of-the-day" }.
 
   return { artwork, loading, error, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById };
 }

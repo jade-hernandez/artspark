@@ -4,8 +4,6 @@ import { useArtwork } from "../hooks/useArtwork";
 import { ArtworkDetail } from "../components/artwork/ArtworkDetail";
 import { Skeleton } from "../components/ui";
 
-// Discriminated union that represents every possible display intention.
-// Exported so App.tsx can drive DiscoverPage without knowing its internals.
 type DisplayIntent =
   | { type: "artwork-of-the-day" }
   | { type: "random" }
@@ -20,9 +18,6 @@ function DiscoverPage({ displayIntent, onDiscoverAnother }: DiscoverPageProps) {
   const { artwork, loading, error, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById } =
     useArtwork();
 
-  // Single effect, single source of truth.
-  // Every intent creates a new object reference in App, so this always re-runs
-  // even when the same favourite is selected twice in a row.
   useEffect(() => {
     switch (displayIntent.type) {
       case "artwork-of-the-day":

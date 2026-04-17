@@ -71,10 +71,7 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
           <Button
             variant='outline'
             size='md'
-            onClick={() => {
-              console.log("Discover another clicked, selectedFavoriteId should reset to null");
-              onDiscoverAnother();
-            }}
+            onClick={onDiscoverAnother}
           >
             <LoaderIcon />
             Discover another

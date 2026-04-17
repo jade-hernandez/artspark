@@ -12,10 +12,6 @@ import type { Favorite } from "./types/artwork";
 function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  // Single source of truth for what DiscoverPage should display.
-  // Using an object (not a primitive) ensures a new reference is created
-  // on every action — including re-selecting the same favourite — so
-  // DiscoverPage's useEffect always re-runs as expected.
   const [displayIntent, setDisplayIntent] = useState<DisplayIntent>({
     type: "artwork-of-the-day",
   });
