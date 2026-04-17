@@ -35,6 +35,10 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
   ].filter(Boolean);
   const metadataLine = metadataParts.join(" · ");
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+
   return (
     <div className='animate-fade-in mx-auto flex w-[calc(100%-2rem)] max-w-2xl flex-col items-center gap-8 py-12'>
       <div className='relative h-100 w-full md:h-125'>
@@ -82,7 +86,10 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
           <Button
             variant='outline'
             size='md'
-            onClick={onDiscoverAnother}
+            onClick={() => {
+              onDiscoverAnother();
+              scrollToTop();
+            }}
           >
             <LoaderIcon />
             Discover another
