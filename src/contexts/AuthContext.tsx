@@ -3,8 +3,6 @@ import type { User } from "@supabase/supabase-js";
 
 import { supabase } from "../lib/supabase";
 
-import { AuthModal } from "../components/auth/AuthModal";
-
 type AuthContextValue = {
   user: User | null;
   loading: boolean;
@@ -12,7 +10,7 @@ type AuthContextValue = {
   openAuthModal: () => void;
   closeAuthModal: () => void;
   signInWithEmail: (email: string, password: string) => Promise<void>;
-  signUpWithEmail: (email: string, password: string) => Promise<void>;
+  signUpWithEmail: (email: string, password: string) => Promise<{ requiresConfirmation: boolean }>;
   signOut: () => Promise<void>;
 };
 
@@ -53,11 +51,9 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function signUpWithEmail(email: string, password: string) {
-    const { error } = await supabase.auth.signUp({ email, password });
-
-    if (error) {
-      throw error;
-    }
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) throw error;
+    return { requiresConfirmation: !!data.user && !data.session };
   }
 
   async function signOut() {
@@ -82,10 +78,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={closeAuthModal}
-      />
     </AuthContext.Provider>
   );
 }
