@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { type ArtworkWithImage } from "../../types/artwork";
 
+import { IIIF_BASE_URL, IIIF_SIZES } from "../../lib/constants";
+
 import { LoaderIcon } from "../icons/LoaderIcon";
 import { Button, Lightbox, Skeleton } from "../ui";
 
@@ -9,23 +11,24 @@ import { FavoriteButton } from "./FavoriteButton";
 
 import { cn } from "../../utils/utils";
 
+import { stripHtml } from "../../utils/strip-html";
+
 type ArtworkDetailProps = {
   artwork: ArtworkWithImage;
-  iiifUrl?: string;
+
   onDiscoverAnother: () => void;
 };
 
-function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailProps) {
+function ArtworkDetail({ artwork, onDiscoverAnother }: ArtworkDetailProps) {
   const [showDescription, setShowDescription] = useState(false);
   const [showAuthMessage, setShowAuthMessage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  const baseIiifUrl = iiifUrl ?? "https://www.artic.edu/iiif/2";
-  const imageUrl = `${baseIiifUrl}/${artwork.image_id}/full/843,/0/default.jpg`;
+  const imageUrl = `${IIIF_BASE_URL}/${artwork.image_id}/full/${IIIF_SIZES.standard}/0/default.jpg`;
   const imageUrlHD = isLightboxOpen
-    ? `${baseIiifUrl}/${artwork.image_id}/full/full/0/default.jpg`
+    ? `${IIIF_BASE_URL}/${artwork.image_id}/full/${IIIF_SIZES.highRes}/0/default.jpg`
     : "";
 
   const metadataParts = [
@@ -109,8 +112,9 @@ function ArtworkDetail({ artwork, iiifUrl, onDiscoverAnother }: ArtworkDetailPro
                 "text-text-primary overflow-hidden text-left text-base leading-relaxed transition-[max-height] duration-500 ease-in-out",
                 showDescription ? "max-h-500" : "max-h-24"
               )}
-              dangerouslySetInnerHTML={{ __html: artwork.description }}
-            />
+            >
+              {stripHtml(artwork.description ?? "")}
+            </div>
 
             {!showDescription && (
               <div

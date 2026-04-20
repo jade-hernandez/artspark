@@ -1,6 +1,9 @@
 import type { Favorite } from "../../types/artwork";
+
 import { CloseIcon } from "../icons/CloseIcon";
 import { Button } from "../ui";
+
+import { IIIF_BASE_URL, IIIF_SIZES } from "../../lib/constants";
 
 type ArtworkCardProps = {
   favorite: Favorite;
@@ -9,7 +12,7 @@ type ArtworkCardProps = {
 };
 
 function ArtworkCard({ favorite, onSelect, onRemove }: ArtworkCardProps) {
-  const thumbnailUrl = `https://www.artic.edu/iiif/2/${favorite.image_id}/full/400,/0/default.jpg`;
+  const thumbnailUrl = `${IIIF_BASE_URL}/${favorite.image_id}/full/${IIIF_SIZES.thumbnail}/0/default.jpg`;
 
   function handleRemove(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
