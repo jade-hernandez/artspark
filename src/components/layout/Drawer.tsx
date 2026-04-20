@@ -35,7 +35,7 @@ function Drawer({ isOpen, onClose, onSelect }: DrawerProps) {
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     };
   }, [isOpen, onClose]);
 
@@ -81,7 +81,9 @@ function Drawer({ isOpen, onClose, onSelect }: DrawerProps) {
             {loading && <Loader />}
             {error && <p className='text-red-600'>Something went wrong. Please try again.</p>}
             {!loading && !error && favorites.length === 0 && (
-              <p className='text-text-secondary'>No favorites yet.</p>
+              <p className='text-text-secondary text-center text-sm'>
+                No favorites yet — start exploring!
+              </p>
             )}
             {!loading && !error && favorites.length > 0 && (
               <MasonryGrid
