@@ -73,7 +73,7 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
             Check your inbox
           </h2>
           <p className='text-text-secondary text-base'>
-            We sent a confirmation link to
+            We sent a confirmation link to{" "}
             <span className='text-text-primary font-medium'>{pendingEmail}</span>.
           </p>
           <p className='text-text-secondary text-base'>
