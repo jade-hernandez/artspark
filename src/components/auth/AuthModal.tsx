@@ -32,6 +32,28 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   async function handleSubmit() {
     setError(null);
+
+    if (!email) {
+      setError("Please enter your email address.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!password) {
+      setError("Please enter your password.");
+      return;
+    }
+
+    if (mode === "signup" && password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -103,6 +125,7 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
               e.preventDefault();
               handleSubmit();
             }}
+            noValidate
           >
             <div className='flex flex-col gap-5'>
               <div className='flex flex-col gap-1'>
@@ -165,7 +188,10 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <>
                 Don't have an account?{" "}
                 <button
-                  onClick={() => setMode("signup")}
+                  onClick={() => {
+                    setMode("signup");
+                    setError(null);
+                  }}
                   className='text-text-primary font-medium underline underline-offset-2'
                 >
                   Sign up
@@ -175,7 +201,10 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <>
                 Already have an account?{" "}
                 <button
-                  onClick={() => setMode("signin")}
+                  onClick={() => {
+                    setMode("signin");
+                    setError(null);
+                  }}
                   className='text-text-primary font-medium underline underline-offset-2'
                 >
                   Sign in
