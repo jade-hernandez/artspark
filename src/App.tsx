@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Toaster } from "sonner";
 
 import { AuthProvider, useAuthContext } from "./contexts/AuthContext";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
@@ -42,6 +43,26 @@ function AppContent() {
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={closeAuthModal}
+      />
+      <Toaster
+        position='bottom-center'
+        offset={32}
+        mobileOffset={24}
+        toastOptions={{
+          style: {
+            backgroundColor: "#f9543f",
+            color: "white",
+            fontFamily: "Inter, sans-serif",
+            textAlign: "center",
+            fontSize: "14px",
+            padding: "12px 20px",
+            width: "fit-content",
+            borderRadius: "8px",
+          },
+          classNames: {
+            error: "border-accent",
+          },
+        }}
       />
     </div>
   );
