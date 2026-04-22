@@ -3,6 +3,7 @@ import { useState } from "react";
 import { type ArtworkWithImage } from "../../types/artwork";
 
 import { IIIF_BASE_URL, IIIF_SIZES } from "../../lib/constants";
+import { stripHtml } from "../../utils/strip-html";
 
 import { LoaderIcon } from "../icons/LoaderIcon";
 import { Button, Lightbox, Skeleton } from "../ui";
@@ -10,8 +11,6 @@ import { Button, Lightbox, Skeleton } from "../ui";
 import { FavoriteButton } from "./FavoriteButton";
 
 import { cn } from "../../utils/utils";
-
-import { stripHtml } from "../../utils/strip-html";
 
 type ArtworkDetailProps = {
   artwork: ArtworkWithImage;
@@ -21,7 +20,6 @@ type ArtworkDetailProps = {
 
 function ArtworkDetail({ artwork, onDiscoverAnother }: ArtworkDetailProps) {
   const [showDescription, setShowDescription] = useState(false);
-  const [showAuthMessage, setShowAuthMessage] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -80,28 +78,19 @@ function ArtworkDetail({ artwork, onDiscoverAnother }: ArtworkDetailProps) {
         {metadataLine && <p className='text-text-secondary text-sm'>{metadataLine}</p>}
       </div>
 
-      <div className='flex flex-col items-center gap-3'>
-        <div className='flex items-center gap-4'>
-          <FavoriteButton
-            artwork={artwork}
-            onUnauthenticated={() => setShowAuthMessage(true)}
-          />
-          <Button
-            variant='outline'
-            size='md'
-            onClick={() => {
-              onDiscoverAnother();
-              scrollToTop();
-            }}
-          >
-            <LoaderIcon />
-            Discover another
-          </Button>
-        </div>
-
-        {showAuthMessage && (
-          <p className='text-text-secondary text-center text-sm'>Sign in to save favorites</p>
-        )}
+      <div className='flex items-center gap-3'>
+        <FavoriteButton artwork={artwork} />
+        <Button
+          variant='outline'
+          size='md'
+          onClick={() => {
+            onDiscoverAnother();
+            scrollToTop();
+          }}
+        >
+          <LoaderIcon />
+          Discover another
+        </Button>
       </div>
 
       {artwork.description && (
