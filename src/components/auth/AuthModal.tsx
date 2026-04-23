@@ -30,30 +30,27 @@ function AuthModal({ isOpen, onClose }: AuthModalProps) {
     }
   }, [isOpen]);
 
-  async function handleSubmit() {
-    setError(null);
-
-    if (!email) {
-      setError("Please enter your email address.");
-      return;
-    }
+  function validate(): string | null {
+    if (!email) return "Please enter your email address.";
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address.");
+    if (!emailRegex.test(email)) return "Please enter a valid email address.";
+
+    if (!password) return "Please enter your password.";
+
+    if (mode === "signup" && password.length < 6) return "Password must be at least 6 characters.";
+
+    return null;
+  }
+
+  async function handleSubmit() {
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
-    if (!password) {
-      setError("Please enter your password.");
-      return;
-    }
-
-    if (mode === "signup" && password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
-
+    setError(null);
     setLoading(true);
 
     try {
