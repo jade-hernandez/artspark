@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Toaster } from "sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AuthProvider, useAuthContext } from "./contexts/AuthContext";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
@@ -10,6 +11,8 @@ import { DiscoverPage } from "./pages/DiscoverPage";
 
 import type { DisplayIntent } from "./pages/DiscoverPage";
 import type { Favorite } from "./types/artwork";
+
+const queryClient = new QueryClient();
 
 function AppContent() {
   const { isAuthModalOpen, closeAuthModal } = useAuthContext();
@@ -70,11 +73,13 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <FavoritesProvider>
-        <AppContent />
-      </FavoritesProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <FavoritesProvider>
+          <AppContent />
+        </FavoritesProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 
