@@ -28,7 +28,11 @@ function useFavorites(userId: string | null) {
 
   const addFavoriteMutation = useMutation({
     mutationFn: async (favorite: FavoriteInsert) => {
-      const { data, error } = await supabase.from("favorites").insert(favorite).select().single();
+      const { data, error } = await supabase
+        .from("favorites")
+        .insert({ ...favorite, user_id: userId })
+        .select()
+        .single();
 
       if (error) throw error;
 

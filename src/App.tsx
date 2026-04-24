@@ -3,7 +3,6 @@ import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AuthProvider, useAuthContext } from "./contexts/AuthContext";
-import { FavoritesProvider } from "./contexts/FavoritesContext";
 import { AuthModal } from "./components/auth/AuthModal";
 import { Drawer } from "./components/layout/Drawer";
 import { Header } from "./components/layout/Header";
@@ -75,9 +74,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <FavoritesProvider>
-          <AppContent />
-        </FavoritesProvider>
+        <AppContent />
       </AuthProvider>
     </QueryClientProvider>
   );

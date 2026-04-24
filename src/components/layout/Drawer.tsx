@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
-import { useFavoritesContext } from "../../contexts/FavoritesContext";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useFavorites } from "../../hooks/useFavorites";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 import type { Favorite } from "../../types/artwork";
@@ -19,7 +20,9 @@ type DrawerProps = {
 
 function Drawer({ isOpen, onClose, onSelect }: DrawerProps) {
   const menuRef = useRef<HTMLDivElement>(null);
-  const { favorites, loading, error, removeFavorite } = useFavoritesContext();
+
+  const { user } = useAuthContext();
+  const { favorites, loading, error, removeFavorite } = useFavorites(user?.id ?? null);
 
   useFocusTrap(menuRef as React.RefObject<HTMLElement>, isOpen);
 
