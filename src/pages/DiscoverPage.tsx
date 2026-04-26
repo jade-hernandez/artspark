@@ -1,12 +1,10 @@
-import { useEffect } from "react";
-
 import { useArtwork } from "../hooks/useArtwork";
 import { ArtworkDetail } from "../components/artwork/ArtworkDetail";
 import { Skeleton } from "../components/ui";
 
 type DisplayIntent =
   | { type: "artwork-of-the-day" }
-  | { type: "random" }
+  | { type: "random"; key: number }
   | { type: "favorite"; artworkId: number };
 
 type DiscoverPageProps = {
@@ -15,22 +13,7 @@ type DiscoverPageProps = {
 };
 
 function DiscoverPage({ displayIntent, onDiscoverAnother }: DiscoverPageProps) {
-  const { artwork, loading, error, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById } =
-    useArtwork();
-
-  useEffect(() => {
-    switch (displayIntent.type) {
-      case "artwork-of-the-day":
-        loadArtworkOfTheDay();
-        break;
-      case "random":
-        loadRandomArtwork();
-        break;
-      case "favorite":
-        loadArtworkById(displayIntent.artworkId);
-        break;
-    }
-  }, [displayIntent, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById]);
+  const { artwork, loading, error } = useArtwork(displayIntent);
 
   return (
     <main
