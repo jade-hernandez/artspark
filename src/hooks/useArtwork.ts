@@ -1,6 +1,7 @@
-import { useCallback, useRef, useState } from "react";
+import { useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-import type { ArtworkWithImage } from "../types/artwork";
+import type { DisplayIntent } from "../pages/DiscoverPage";
 
 import {
   fetchArtworkById,
@@ -9,62 +10,62 @@ import {
   fetchSafeTotalPages,
 } from "../api/fetch-artworks";
 
-function useArtwork() {
-  const [artwork, setArtwork] = useState<ArtworkWithImage | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
+function useArtwork(displayIntent: DisplayIntent) {
   const seenIds = useRef<number[]>([]);
 
-  const loadArtworkOfTheDay = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  const selectedArtworkId = displayIntent.type === "favorite" ? displayIntent.artworkId : null;
 
-    try {
+  const activeQuery =
+    displayIntent.type === "artwork-of-the-day"
+      ? ("daily" as const)
+      : displayIntent.type === "random"
+        ? ("random" as const)
+        : ("by-id" as const);
+
+  const randomKey = displayIntent.type === "random" ? displayIntent.key : 0;
+
+  const artworkOfTheDayQuery = useQuery({
+    queryKey: ["artwork", "daily"],
+    queryFn: async () => {
       const result = await fetchArtworkOfTheDay();
-
       seenIds.current = [...seenIds.current, result.id];
-      setArtwork(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load artwork of the day");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      return result;
+    },
+    staleTime: 1000 * 60 * 60 * 24,
+  });
 
-  const loadRandomArtwork = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
+  const randomArtworkQuery = useQuery({
+    queryKey: ["artwork", "random", randomKey],
+    queryFn: async () => {
       const totalPages = await fetchSafeTotalPages();
       const result = await fetchRandomArtwork(totalPages, seenIds.current);
-
       seenIds.current = [...seenIds.current, result.id];
-      setArtwork(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load random artwork");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      return result;
+    },
+    enabled: randomKey > 0,
+  });
 
-  const loadArtworkById = useCallback(async (artworkId: number) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await fetchArtworkById(artworkId);
+  const artworkByIdQuery = useQuery({
+    queryKey: ["artwork", "by-id", selectedArtworkId],
+    queryFn: async () => {
+      const result = await fetchArtworkById(selectedArtworkId!);
       seenIds.current = [...seenIds.current, result.id];
-      setArtwork(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load artwork");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      return result;
+    },
+    enabled: selectedArtworkId !== null,
+  });
+  const activeQueryResult =
+    activeQuery === "daily"
+      ? artworkOfTheDayQuery
+      : activeQuery === "random"
+        ? randomArtworkQuery
+        : artworkByIdQuery;
 
-  return { artwork, loading, error, loadArtworkOfTheDay, loadRandomArtwork, loadArtworkById };
+  return {
+    artwork: activeQueryResult.data ?? null,
+    loading: activeQueryResult.isLoading || activeQueryResult.isFetching,
+    error: (activeQueryResult.error as Error)?.message ?? null,
+  };
 }
 
 export { useArtwork };
