@@ -15,7 +15,6 @@ const queryClient = new QueryClient();
 
 function AppContent() {
   const { isAuthModalOpen, closeAuthModal } = useAuthContext();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [displayIntent, setDisplayIntent] = useState<DisplayIntent>({
     type: "artwork-of-the-day",
@@ -27,7 +26,10 @@ function AppContent() {
   }
 
   function handleDiscoverAnother() {
-    setDisplayIntent({ type: "random" });
+    setDisplayIntent(prev => {
+      const currentKey = prev.type === "random" ? prev.key : 0;
+      return { type: "random", key: currentKey + 1 };
+    });
   }
 
   return (
