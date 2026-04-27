@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useAuthContext } from "../../contexts/AuthContext";
 
-import { Button } from "../ui/Button";
+import { Button } from "../ui";
 import { HeartIcon } from "../icons/HeartIcon";
 
 import { cn } from "../../utils/utils";

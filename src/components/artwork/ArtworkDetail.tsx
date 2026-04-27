@@ -99,7 +99,7 @@ function ArtworkDetail({ artwork, onDiscoverAnother }: ArtworkDetailProps) {
             <div
               className={cn(
                 "text-text-primary overflow-hidden text-left text-base leading-relaxed transition-[max-height] duration-500 ease-in-out",
-                showDescription ? "max-h-500" : "max-h-24"
+                showDescription ? "max-h-125" : "max-h-24"
               )}
             >
               {stripHtml(artwork.description ?? "")}

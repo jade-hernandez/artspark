@@ -1,6 +1,6 @@
-interface IconProps {
+type IconProps = {
   className?: string;
-}
+};
 function HeartIcon(props: IconProps) {
   return (
     <svg
