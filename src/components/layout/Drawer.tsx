@@ -81,7 +81,11 @@ function Drawer({ isOpen, onClose, onSelect }: DrawerProps) {
           </div>
 
           <div className='flex flex-1 flex-col overflow-y-auto p-6'>
-            {loading && <Loader />}
+            {loading && (
+              <div className='flex flex-1 items-center justify-center'>
+                <Loader />
+              </div>
+            )}
             {error && <p className='text-red-600'>Something went wrong. Please try again.</p>}
             {!loading && !error && favorites.length === 0 && (
               <p className='text-text-secondary text-center text-sm'>
