@@ -54,7 +54,7 @@ function AppContent() {
         mobileOffset={24}
         toastOptions={{
           style: {
-            backgroundColor: "#f9543f",
+            backgroundColor: "var(--color-accent)",
             color: "white",
             fontFamily: "Inter, sans-serif",
             textAlign: "center",
