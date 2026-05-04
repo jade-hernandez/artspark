@@ -45,7 +45,13 @@ function useFavorites(userId: string | null) {
 
   const removeFavoriteMutation = useMutation({
     mutationFn: async (artworkId: number) => {
-      const { error } = await supabase.from("favorites").delete().eq("artwork_id", artworkId);
+      if (!userId) throw new Error("User not authenticated");
+
+      const { error } = await supabase
+        .from("favorites")
+        .delete()
+        .eq("artwork_id", artworkId)
+        .eq("user_id", userId);
 
       if (error) throw error;
     },
