@@ -89,7 +89,7 @@ function Drawer({ isOpen, onClose, onSelect }: DrawerProps) {
             {error && <p className='text-red-600'>Something went wrong. Please try again.</p>}
             {!loading && !error && favorites.length === 0 && (
               <p className='text-text-secondary text-center text-sm'>
-                No favorites yet — start exploring!
+                Sign in to save and view your favorites.
               </p>
             )}
             {!loading && !error && favorites.length > 0 && (
