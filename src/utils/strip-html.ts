@@ -5,7 +5,10 @@
  * Used to safely render API descriptions without dangerouslySetInnerHTML.
  */
 function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, "").trim();
+  const withoutTags = html.replace(/<[^>]*>/g, "");
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = withoutTags;
+  return textarea.value.trim();
 }
 
 export { stripHtml };
