@@ -36,9 +36,9 @@ function ArtworkDetail({ artwork, onDiscoverAnother }: ArtworkDetailProps) {
   ].filter(Boolean);
   const metadataLine = metadataParts.join(" · ");
 
-  const scrollToTop = () => {
+  function scrollToTop() {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  };
+  }
 
   return (
     <div className='animate-fade-in mx-auto flex w-[calc(100%-2rem)] max-w-2xl flex-col items-center gap-8 py-12'>
