@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -22,6 +23,14 @@ function Header({ onOpenCollection }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  async function handleSignOut() {
+    try {
+      await signOut();
+    } catch {
+      toast.error("Failed to sign out. Please try again.");
+    }
+  }
+
   return (
     <header
       className={cn(
@@ -36,7 +45,7 @@ function Header({ onOpenCollection }: HeaderProps) {
           <Button
             variant='ghost'
             size='md'
-            onClick={user ? signOut : openAuthModal}
+            onClick={user ? handleSignOut : openAuthModal}
           >
             {user ? "Sign out" : "Sign in"}
           </Button>
